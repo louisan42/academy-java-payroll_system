@@ -10,6 +10,6 @@ public class SecondaryController {
 
     @FXML
     private void switchToLogin() throws IOException {
-        App.setRoot("login");
+        App.setRoot("view/login");
     }
 }

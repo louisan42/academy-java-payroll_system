@@ -18,10 +18,17 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        loginScene = new Scene(loadFXML("login"), 350, 200);
-        mainScene = new Scene(loadFXML("login"), 700, 580);
+        final double loginWidth = 650.0;
+        final double loginHeight = 460.0;
+        loginScene = new Scene(loadFXML("view/login"));
+        mainScene = new Scene(loadFXML("view/primary"), 700, 580);
         App.stage = stage;
         stage.setScene(loginScene);
+        // lock window resizing
+        stage.setMinWidth(loginWidth);
+        stage.setMaxWidth(loginWidth);
+        stage.setMinHeight(loginHeight);
+        stage.setMaxHeight(loginHeight);
         stage.show();
     }
 
@@ -31,6 +38,11 @@ public class App extends Application {
 
     public static void switchScene(String rootFxml) throws IOException {
         stage.setScene(mainScene);
+        // unlock window resizing
+        stage.setMinWidth(700);
+        stage.setMaxWidth(Double.MAX_VALUE);
+        stage.setMinHeight(580);
+        stage.setMaxHeight(Double.MAX_VALUE);
         setRoot(rootFxml);
     }
 

@@ -1,0 +1,11 @@
+ID,firstName,lastName,email,username,password,avatar
+1,Kimberly,Cook,kmcook@outlook.com,mightytray,"$argon2id$v=19$m=4096,t=2,p=2$RBZmyDadsGqZbXj6$EtIMprc4hNF2qX51aegTpMz6t3682/cTLmFGCEIVwpY",
+2,Grace,Hernandez,grace.hernandez@aol.com,bouncyforce,,
+3,Richard,Martin,richard_martin95@outlook.com,quietelbow,,
+4,Alyssa,Turner,a.turner@ymail.com,goofyhoney,,
+5,Jonathan,Mitchell,jmitchell75@rocketmail.com,shortice,,
+6,Benjamin,Garcia,bgarcia@ymail.com,uppityexistence,,
+7,Brianna,Henderson,bhenderson37@gmail.com,ultratray,,
+8,Katherine,Ward,katherinedawnward@gmail.com,handsomesupport,,
+9,Emily,Moore,emily_m_moore@rocketmail.com,distinctparcel,,
+10,Elizabeth,Parker,elizabethlparker@ymail.com,wrygovernor,,

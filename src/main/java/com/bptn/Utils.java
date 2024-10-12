@@ -13,7 +13,7 @@ public class Utils {
      * - iteration : - 2
      * see https://snyk.io/blog/password-hashing-java-applications/
      */
-    private static Argon2PasswordEncoder encoder = 
+    private static final Argon2PasswordEncoder encoder =
       new Argon2PasswordEncoder(12, 32, 2, 4 * 1024, 2);
 
   /**

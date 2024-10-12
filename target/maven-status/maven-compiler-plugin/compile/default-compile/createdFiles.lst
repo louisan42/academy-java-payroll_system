@@ -2,3 +2,4 @@ com/bptn/controllers/PrimaryController.class
 com/bptn/App.class
 com/bptn/controllers/SecondaryController.class
 com/bptn/controllers/LoginController.class
+com/bptn/forms/BaseForm.class
