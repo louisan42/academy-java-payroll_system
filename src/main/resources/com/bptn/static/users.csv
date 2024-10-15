@@ -1,4 +1,4 @@
-ID,firstName,lastName,email,username,password,avatar
+ID,firstName,lastName,email,username,password,avatarUrl
 1,Kimberly,Cook,kmcook@outlook.com,mightytray,"$argon2id$v=19$m=4096,t=2,p=2$RBZmyDadsGqZbXj6$EtIMprc4hNF2qX51aegTpMz6t3682/cTLmFGCEIVwpY",
 2,Grace,Hernandez,grace.hernandez@aol.com,bouncyforce,,
 3,Richard,Martin,richard_martin95@outlook.com,quietelbow,,

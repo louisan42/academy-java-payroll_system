@@ -8,6 +8,8 @@ import com.bptn.App;
 import com.bptn.Utils;
 import com.bptn.constants.AppConstants;
 import com.bptn.forms.BaseForm;
+import com.bptn.models.AppUser;
+import com.bptn.models.Person;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
@@ -29,8 +31,13 @@ public class LoginController {
             BaseForm.showAlert(Alert.AlertType.ERROR, AppConstants.INPUT_ERROR,AppConstants.USERNAME_PASSWORD_REQUIRED);
 
         } else {
-            String pass = Utils.verifyPassword(passwordField.getText());
-            System.out.println(pass);
+            Person user;
+            String passwordHash;
+
+            if (App.users.containsKey(usernameField.getText())){
+                user = App.users.get(usernameField.getText());
+            }
+
             App.switchScene("view/primary");
         }
 
