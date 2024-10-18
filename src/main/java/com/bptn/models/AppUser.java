@@ -7,18 +7,20 @@ public class AppUser implements Person{
     private String passwordHash;
     private int id;
     private String avatarUrl;
+    private String email;
 
     public AppUser(){};
 
 
 
-    public AppUser (String firstName, String lastName, String username, String passwordHash, int id, String avatarUrl) {
+    public AppUser (String firstName, String lastName, String username,String email, String passwordHash, int id, String avatarUrl) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.passwordHash = passwordHash;
         this.id = id;
         this.avatarUrl = avatarUrl;
+        this.email = email;
     }
 
     public String getUsername () {

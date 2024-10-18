@@ -20,7 +20,7 @@ public class App extends Application {
 
     private static Scene mainScene;
     private static Stage stage;
-    public static Map<String, Person> users;
+    public static Map<String, AppUser> users;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -32,7 +32,7 @@ public class App extends Application {
         users = userDb.loadFile(AppConstants.USERS_CSV_FILE);
 
         Scene loginScene = new Scene(loadFXML("view/login"));
-        mainScene = new Scene(loadFXML("view/primary"), 700, 580);
+        mainScene = new Scene(loadFXML("view/dashboard"), 700, 580);
         App.stage = stage;
         stage.setScene(loginScene);
 

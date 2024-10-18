@@ -3,6 +3,7 @@ com/bptn/App.class
 com/bptn/services/CsvFileHandler.class
 com/bptn/controllers/SecondaryController.class
 com/bptn/controllers/PrimaryController.class
+com/bptn/services/StateManager.class
 com/bptn/controllers/LoginController.class
 com/bptn/services/Authenticator.class
 com/bptn/services/CsvAppUserLoader.class

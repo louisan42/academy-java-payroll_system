@@ -26,7 +26,8 @@ replay_pid*
 # vscode
 .vscode/*
 
-target/
+target/*
+/target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/

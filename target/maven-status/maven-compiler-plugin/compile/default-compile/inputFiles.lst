@@ -1,6 +1,7 @@
 /home/louisan/Documents/Projects/academy-java-payroll_system/src/main/java/com/bptn/models/AppUser.java
 /home/louisan/Documents/Projects/academy-java-payroll_system/src/main/java/com/bptn/controllers/LoginController.java
 /home/louisan/Documents/Projects/academy-java-payroll_system/src/main/java/com/bptn/App.java
+/home/louisan/Documents/Projects/academy-java-payroll_system/src/main/java/com/bptn/services/StateManager.java
 /home/louisan/Documents/Projects/academy-java-payroll_system/src/main/java/com/bptn/models/Person.java
 /home/louisan/Documents/Projects/academy-java-payroll_system/src/main/java/com/bptn/services/CsvFileHandler.java
 /home/louisan/Documents/Projects/academy-java-payroll_system/src/main/java/com/bptn/controllers/PrimaryController.java

@@ -15,8 +15,8 @@ import java.util.Map;
 
 public class CsvAppUserLoader implements CsvFileHandler{
     @Override
-    public Map<String,Person> loadFile (String filePath) throws IOException {
-        Map<String,Person> appUsers = new HashMap<>();
+    public Map<String, AppUser> loadFile (String filePath) throws IOException {
+        Map<String,AppUser> appUsers = new HashMap<>();
         try (Reader reader = new FileReader(filePath)) {
             Iterable<CSVRecord> records = CSVFormat.DEFAULT.builder()
                     .setHeader().setSkipHeaderRecord(true)
@@ -30,7 +30,7 @@ public class CsvAppUserLoader implements CsvFileHandler{
                 String email = record.get("email");
                 String avatarUrl = record.get("avatarUrl");
 
-                Person appUser = new AppUser(firstName,lastName,username,passwordHash,id,avatarUrl);
+                AppUser appUser = new AppUser(firstName,lastName,username, email,passwordHash,id,avatarUrl);
                 appUsers.put(username,appUser);
             }
         }
