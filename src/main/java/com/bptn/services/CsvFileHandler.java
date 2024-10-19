@@ -10,5 +10,5 @@ import java.util.Map;
 public interface CsvFileHandler {
     public Map<String, AppUser> loadFile(final String filePath) throws IOException;
 
-    public void writeToFile(List<Person> person) throws IOException;
+    public void writeToFile(List<Person> IPeople) throws IOException;
 }

@@ -22,13 +22,13 @@ public class CsvAppUserLoader implements CsvFileHandler{
                     .setHeader().setSkipHeaderRecord(true)
                     .build().parse(reader);
             for (CSVRecord record : records){
-                String firstName = record.get("firstName");
-                String lastName = record.get("lastName");
-                int id = Integer.parseInt(record.get("ID"));
+                String firstName = record.get("first_name");
+                String lastName = record.get("last_name");
+                int id = Integer.parseInt(record.get("id"));
                 String username = record.get("username");
                 String passwordHash = record.get("password");
                 String email = record.get("email");
-                String avatarUrl = record.get("avatarUrl");
+                String avatarUrl = record.get("avatar_url");
 
                 AppUser appUser = new AppUser(firstName,lastName,username, email,passwordHash,id,avatarUrl);
                 appUsers.put(username,appUser);
@@ -40,7 +40,7 @@ public class CsvAppUserLoader implements CsvFileHandler{
     }
 
     @Override
-    public void writeToFile (List<Person> person) throws IOException {
+    public void writeToFile (List<Person> IPeople) throws IOException {
 
     }
 }

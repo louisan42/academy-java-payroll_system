@@ -5,14 +5,13 @@ import java.io.IOException;
 
 import com.bptn.App;
 
-import com.bptn.Utils;
 import com.bptn.constants.AppConstants;
 import com.bptn.forms.BaseForm;
-import com.bptn.models.AppUser;
-import com.bptn.models.Person;
 import com.bptn.services.AuthenticatorService;
+import com.bptn.services.DBManager;
 import com.bptn.services.StateManager;
 import javafx.fxml.FXML;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -26,6 +25,7 @@ public class LoginController {
     public Label passwordLabel;
     public PasswordField passwordField;
     public Button loginButton;
+    public PieChart departmentPieChart;
     AuthenticatorService authService = new AuthenticatorService();
 
     @FXML
@@ -37,7 +37,8 @@ public class LoginController {
             String passwordHash;
             String userKey = usernameField.getText();
 
-            if (App.users.containsKey(userKey)){
+//            if (App.users.containsKey(userKey)){
+            if (DBManager.readuser(userKey) != null) {
                 passwordHash = App.users.get(userKey).getPasswordHash();
                 if (authService.verifyPassword(passwordField.getText(),passwordHash)){
                     StateManager.setUser(App.users.get(userKey));

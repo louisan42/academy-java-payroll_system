@@ -1,7 +1,5 @@
-ID,firstName,lastName,email,username,password,avatarUrl
-1,Kimberly,Cook,kmcook@outlook.com,mightytray,"$argon2id$v=19$m=4096,t=2,p=2$RBZmyDadsGqZbXj6$EtIMprc4hNF2qX51aegTpMz6t3682/cTLmFGCEIVwpY",
-2,Grace,Hernandez,grace.hernandez@aol.com,bouncyforce,,
-3,Richard,Martin,richard_martin95@outlook.com,quietelbow,,
-4,Alyssa,Turner,a.turner@ymail.com,goofyhoney,,
-5,Jonathan,Mitchell,jmitchell75@rocketmail.com,shortice,,
-
+id,first_name,last_name,email,username,password,avatar_url
+5000,Kimberly,Cook,kmcook@outlook.com,mightytray,"$argon2id$v=19$m=4096,t=2,p=2$RBZmyDadsGqZbXj6$EtIMprc4hNF2qX51aegTpMz6t3682/cTLmFGCEIVwpY",https://robohash.org/insitnecessitatibus.png?size=50x50&set=set1
+5001,Grace,Hernandez,grace.hernandez@aol.com,bouncyforce,"$argon2id$v=19$m=4096,t=2,p=2$RBZmyDadsGqZbXj6$EtIMprc4hNF2qX51aegTpMz6t3682/cTLmFGCEIVwpY",https://robohash.org/occaecatiutducimus.png?size=50x50&set=set1
+5002,Richard,Martin,richard_martin95@outlook.com,quietelbow,"$argon2id$v=19$m=4096,t=2,p=2$RBZmyDadsGqZbXj6$EtIMprc4hNF2qX51aegTpMz6t3682/cTLmFGCEIVwpY",https://robohash.org/cupiditatedebitisullam.png?size=50x50&set=set1
+5003,Alyssa,Turner,a.turner@ymail.com,goofyhoney,"$argon2id$v=19$m=4096,t=2,p=2$RBZmyDadsGqZbXj6$EtIMprc4hNF2qX51aegTpMz6t3682/cTLmFGCEIVwpY",https://robohash.org/utplaceatquam.png?size=50x50&set=set1

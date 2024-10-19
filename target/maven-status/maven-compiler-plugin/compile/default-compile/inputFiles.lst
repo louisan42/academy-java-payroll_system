@@ -3,12 +3,16 @@
 /home/louisan/Documents/Projects/academy-java-payroll_system/src/main/java/com/bptn/App.java
 /home/louisan/Documents/Projects/academy-java-payroll_system/src/main/java/com/bptn/services/StateManager.java
 /home/louisan/Documents/Projects/academy-java-payroll_system/src/main/java/com/bptn/models/Person.java
+/home/louisan/Documents/Projects/academy-java-payroll_system/src/main/java/com/bptn/models/User.java
 /home/louisan/Documents/Projects/academy-java-payroll_system/src/main/java/com/bptn/services/CsvFileHandler.java
 /home/louisan/Documents/Projects/academy-java-payroll_system/src/main/java/com/bptn/controllers/PrimaryController.java
+/home/louisan/Documents/Projects/academy-java-payroll_system/src/main/java/com/bptn/services/DBManager.java
 /home/louisan/Documents/Projects/academy-java-payroll_system/src/main/java/com/bptn/controllers/SecondaryController.java
 /home/louisan/Documents/Projects/academy-java-payroll_system/src/main/java/com/bptn/Utils.java
+/home/louisan/Documents/Projects/academy-java-payroll_system/src/main/java/com/bptn/models/RPerson.java
 /home/louisan/Documents/Projects/academy-java-payroll_system/src/main/java/com/bptn/forms/BaseForm.java
 /home/louisan/Documents/Projects/academy-java-payroll_system/src/main/java/com/bptn/services/AuthenticatorService.java
 /home/louisan/Documents/Projects/academy-java-payroll_system/src/main/java/com/bptn/services/Authenticator.java
+/home/louisan/Documents/Projects/academy-java-payroll_system/src/main/java/com/bptn/models/Employee.java
 /home/louisan/Documents/Projects/academy-java-payroll_system/src/main/java/com/bptn/services/CsvAppUserLoader.java
 /home/louisan/Documents/Projects/academy-java-payroll_system/src/main/java/com/bptn/constants/AppConstants.java

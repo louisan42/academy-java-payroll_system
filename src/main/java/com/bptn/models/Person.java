@@ -1,5 +1,6 @@
 package com.bptn.models;
 
+
 public interface Person {
     // Get the first name of the person
     String getFirstName();
@@ -20,3 +21,4 @@ public interface Person {
 
 
 }
+

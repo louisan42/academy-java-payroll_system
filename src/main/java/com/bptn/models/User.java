@@ -1,19 +1,28 @@
 package com.bptn.models;
 
-public class AppUser implements Person {
+
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "Users")
+public class User implements Person{
+
     private String firstName;
     private String lastName;
     private String username;
     private String passwordHash;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String avatarUrl;
     private String email;
 
-    public AppUser(){};
+    public User(){};
 
 
 
-    public AppUser (String firstName, String lastName, String username,String email, String passwordHash, int id, String avatarUrl) {
+    public User (String firstName, String lastName, String username,String email, String passwordHash, int id, String avatarUrl) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
@@ -37,6 +46,14 @@ public class AppUser implements Person {
 
     public void setPasswordHash (String passwordHash) {
         this.passwordHash = passwordHash;
+    }
+
+    public String getEmail () {
+        return email;
+    }
+
+    public void setEmail (String email) {
+        this.email = email;
     }
 
     public int getId () {
