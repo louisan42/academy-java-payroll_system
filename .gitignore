@@ -46,3 +46,5 @@ target/*
 *.iws
 *.iml
 *.ipr
+
+src/main/resources/hibernate.cfg.xml
