@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane fx:id="loginStackPane" styleClass="login-background" stylesheets="@../styles/login.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bptn.controllers.LoginController">
+    <VBox alignment="CENTER" maxWidth="600" spacing="20" styleClass="login-container">
+        <ImageView fitHeight="100.0" fitWidth="234.0" preserveRatio="true" scaleX="4.0" scaleY="4.0" styleClass="logo">
+            <Image url="@../static/newlogo.png" />
+        </ImageView>
+
+        <VBox spacing="10" styleClass="input-container">
+            <Label styleClass="input-label" text="Username" />
+            <TextField fx:id="usernameField" promptText="Enter your username" styleClass="input-field" />
+        </VBox>
+
+        <VBox spacing="10" styleClass="input-container">
+            <Label styleClass="input-label" text="Password" />
+            <PasswordField fx:id="passwordField" promptText="Enter your password" styleClass="input-field" />
+        </VBox>
+
+        <Button fx:id="loginButton" onAction="#login" styleClass="login-button" text="Login" />
+
+        <ProgressIndicator fx:id="progressIndicator" scaleX="10.0" scaleY="10.0" styleClass="progress-indicator" visible="false" />
+    </VBox>
+</StackPane>

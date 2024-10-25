@@ -48,3 +48,5 @@ target/*
 *.ipr
 
 src/main/resources/hibernate.cfg.xml
+*.cfg.xml!/src/main/resources/hibernate.cfg.xml
+!/target/

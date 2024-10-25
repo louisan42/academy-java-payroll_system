@@ -2,21 +2,25 @@
 package com.bptn.controllers;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import com.bptn.App;
 
 import com.bptn.constants.AppConstants;
-import com.bptn.forms.BaseForm;
+import com.bptn.forms.FormUtils;
+import com.bptn.models.User;
 import com.bptn.services.AuthenticatorService;
 import com.bptn.services.DBManager;
 import com.bptn.services.StateManager;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 
-public class LoginController {
+public class LoginController implements FormUtils{
 
     public TextField usernameField;
     public BorderPane loginBorderPane;
@@ -26,34 +30,78 @@ public class LoginController {
     public PasswordField passwordField;
     public Button loginButton;
     public PieChart departmentPieChart;
+    public ProgressIndicator progressIndicator;
+    public StackPane loginStackPane;
+    public StackPane centerContent;
     AuthenticatorService authService = new AuthenticatorService();
 
     @FXML
   private void login() throws IOException {
-        if(usernameField.getText().isEmpty() || passwordField.getText().isEmpty()){
-            BaseForm.showAlert(Alert.AlertType.ERROR, AppConstants.INPUT_ERROR,AppConstants.USERNAME_PASSWORD_REQUIRED);
+        final String username = usernameField.getText();
+        final String password = passwordField.getText();
+        if(username.isEmpty() || password.isEmpty()){
+            FormUtils.showAlert(Alert.AlertType.ERROR, AppConstants.INPUT_ERROR,AppConstants.USERNAME_PASSWORD_REQUIRED);
 
         } else {
-            String passwordHash;
-            String userKey = usernameField.getText();
+            toggleSpinner(true);
+            Task<User> fetchUserTask = new Task<>(){
 
-//            if (App.users.containsKey(userKey)){
-            if (DBManager.readuser(userKey) != null) {
-                passwordHash = App.users.get(userKey).getPasswordHash();
-                if (authService.verifyPassword(passwordField.getText(),passwordHash)){
-                    StateManager.setUser(App.users.get(userKey));
-                    App.switchScene("view/dashboard");
+                /**
+                 * @return 
+                 * @throws Exception
+                 */
+                @Override
+                protected User call () throws Exception {
+
+                    return DBManager.readUserByUsername(username);
+                }
+            };
+
+            fetchUserTask.setOnSucceeded(workerStateEvent -> {
+                toggleSpinner(false);
+                Optional<User> user = Optional.ofNullable(fetchUserTask.getValue());
+                if (user.isPresent()) {
+                    final String passwordHash = user.get().getPasswordHash();
+                    if (authService.verifyPassword(password,passwordHash)){
+                        StateManager.setUser(user.get());
+                        try {
+                            App.switchScene("view/dashboard");
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    } else {
+                        FormUtils.showAlert(Alert.AlertType.ERROR,AppConstants.INVALID_CREDENTIALS,AppConstants.INVALID_CREDENTIALS);
+                    }
+
                 } else {
-                    BaseForm.showAlert(Alert.AlertType.ERROR,AppConstants.INVALID_CREDENTIALS,AppConstants.INVALID_CREDENTIALS);
+                    FormUtils.showAlert(Alert.AlertType.ERROR,AppConstants.USER_NOT_FOUND,AppConstants.USER_NOT_FOUND);
                 }
 
-            } else {
-                BaseForm.showAlert(Alert.AlertType.ERROR,AppConstants.USER_NOT_FOUND,AppConstants.USER_NOT_FOUND);
-            }
+            });
+            // In case we get any error retrieving user from DB
+            fetchUserTask.setOnFailed(workerStateEvent -> {
+                toggleSpinner(false);
+                FormUtils.showAlert(Alert.AlertType.ERROR,"Error",fetchUserTask.getException().getMessage());
+            });
 
-
+            new Thread(fetchUserTask).start();
         }
 
 
   }
+
+    /**
+     * Set visibility of components.
+     * Useful during Task handling
+     * @param visible boolean value to set visibility
+     */
+    @Override
+    public void toggleSpinner (boolean visible) {
+        progressIndicator.setVisible(visible);
+        loginButton.setDisable(visible);
+        usernameField.setDisable(visible);
+        passwordField.setDisable(visible);
+    }
+
+
 }

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1052.0" stylesheets="@../styles/employee.css" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bptn.controllers.EmployeeController">
+   <left>
+     <VBox prefHeight="815.0" prefWidth="293.0" spacing="5.0" styleClass="card" BorderPane.alignment="CENTER">
+       <padding>
+         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+       </padding>
+       <BorderPane.margin>
+         <Insets bottom="15.0" left="15.0" />
+       </BorderPane.margin>
+       <ImageView fitHeight="224.0" fitWidth="230.0" pickOnBounds="true" preserveRatio="true" />
+     </VBox>
+   </left>
+   <top>
+      <Label text="Employee details" BorderPane.alignment="TOP_LEFT">
+         <font>
+            <Font name="System Bold" size="28.0" />
+         </font>
+         <padding>
+            <Insets bottom="15.0" left="15.0" top="15.0" />
+         </padding></Label>
+   </top>
+   <center>
+     <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+       <BorderPane.margin>
+         <Insets bottom="10.0" left="10.0" right="10.0" />
+       </BorderPane.margin>
+       <HBox prefHeight="80.0" prefWidth="306.0" spacing="50.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="15.0">
+         <padding>
+           <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+         <MFXButton fx:id="saveButton" disable="true" onAction="#saveChanges" prefHeight="40.0" prefWidth="108.0" style="-fx-background-color: green; -fx-border-radius: 0; -fx-text-fill: white;" text="Save" />
+         <MFXButton fx:id="deleteButton" onAction="#deleteEmployee" prefHeight="40.0" prefWidth="108.0" style="-fx-background-color: red; -fx-text-fill: white;" text="Delete" textAlignment="CENTER" />
+       </HBox>
+       <VBox prefHeight="388.0" prefWidth="715.0" spacing="35.0" styleClass="card" AnchorPane.topAnchor="0.0">
+         <padding>
+           <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+         <Label text="Personal details">
+           <font>
+             <Font size="24.0" />
+           </font>
+           <VBox.margin>
+             <Insets />
+           </VBox.margin>
+           <padding>
+             <Insets left="10.0" top="10.0" />
+           </padding>
+         </Label>
+         <MFXTextField fx:id="fullName" floatingText="Full name" floatingTextGap="8.0" maxWidth="700.0" selectable="false" style="-fx-background-color: #F7F8FF; -fx-border-radius: 5; -fx-border-color: none;">
+           <font>
+             <Font size="18.0" />
+           </font>
+         </MFXTextField>
+         <HBox spacing="50.0">
+           <MFXTextField fx:id="gender" floatingText="Gender" floatingTextGap="8.0" maxWidth="246.0" prefHeight="65.0" prefWidth="246.0" selectable="false" style="-fx-background-color: #F7F8FF; -fx-border-radius: 5; -fx-border-color: none;">
+             <font>
+               <Font size="18.0" />
+             </font>
+           </MFXTextField>
+           <MFXTextField fx:id="email" alignment="BASELINE_LEFT" floatingText="Email" floatingTextGap="8.0" maxWidth="399.0" prefHeight="65.0" prefWidth="399.0" selectable="false" style="-fx-background-color: #F7F8FF; -fx-border-radius: 5; -fx-border-color: none;">
+             <font>
+               <Font size="18.0" />
+             </font>
+           </MFXTextField>
+         </HBox>
+         <HBox layoutX="20.0" layoutY="190.0" spacing="50.0">
+           <MFXTextField fx:id="startDate" floatingText="Start date" floatingTextGap="8.0" maxWidth="490.0" prefHeight="65.0" prefWidth="490.0" selectable="false" style="-fx-background-color: #F7F8FF; -fx-border-radius: 5; -fx-border-color: none;">
+             <font>
+               <Font size="18.0" />
+             </font>
+           </MFXTextField>
+           <MFXTextField fx:id="salary" alignment="BASELINE_LEFT" floatingText="Salary" floatingTextGap="8.0" maxWidth="402.0" prefHeight="65.0" prefWidth="402.0" selectable="false" style="-fx-background-color: #F7F8FF; -fx-border-radius: 5; -fx-border-color: none;">
+             <font>
+               <Font size="18.0" />
+             </font>
+           </MFXTextField>
+         </HBox>
+       </VBox>
+       <VBox layoutY="536.0" prefHeight="285.0" prefWidth="715.0" spacing="35.0" styleClass="card" AnchorPane.bottomAnchor="100.0">
+         <padding>
+           <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+         <Label text="Department Info">
+           <font>
+             <Font size="24.0" />
+           </font>
+           <padding>
+             <Insets left="10.0" top="10.0" />
+           </padding>
+         </Label>
+         <HBox spacing="50.0">
+           <MFXTextField fx:id="departmentName" floatingText="Department name" floatingTextGap="8.0" maxWidth="372.0" prefHeight="65.0" prefWidth="372.0" selectable="false" style="-fx-background-color: #F7F8FF; -fx-border-radius: 5; -fx-border-color: none;">
+             <font>
+               <Font size="18.0" />
+             </font>
+           </MFXTextField>
+           <MFXTextField fx:id="departmentLocation" alignment="BASELINE_LEFT" floatingText="Location" floatingTextGap="8.0" maxWidth="399.0" prefHeight="65.0" prefWidth="399.0" selectable="false" style="-fx-background-color: #F7F8FF; -fx-border-radius: 5; -fx-border-color: none;">
+             <font>
+               <Font size="18.0" />
+             </font>
+           </MFXTextField>
+         </HBox>
+         <MFXTextField fx:id="mangerName" floatingText="Manager's name" floatingTextGap="8.0" maxWidth="700.0" selectable="false" style="-fx-background-color: #F7F8FF; -fx-border-radius: 5; -fx-border-color: none;">
+           <font>
+             <Font size="18.0" />
+           </font>
+         </MFXTextField>
+       </VBox>
+     </AnchorPane>
+   </center>
+</BorderPane>

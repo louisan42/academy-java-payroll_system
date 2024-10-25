@@ -1,0 +1,24 @@
+.card {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 3);
+}
+.outline-button {
+    -fx-background-color: transparent;
+    -fx-border-color: #2196F3;
+    -fx-border-width: 1;
+    -fx-text-fill: #2196F3;
+}
+
+.mfx-text-field .floating-text {
+    -fx-text-fill: black;
+}
+
+.emp-text-field {
+    -fx-border-color: none;
+    -fx-background-radius: 5;
+    -fx-background-color: #F7F8FF;
+}
+.mfx-button {
+    -fx-background-color: blue;
+}

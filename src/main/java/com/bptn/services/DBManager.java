@@ -1,12 +1,16 @@
 package com.bptn.services;
 
+import com.bptn.models.Employee;
 import com.bptn.models.User;
 import jakarta.persistence.EntityTransaction;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class DBManager {
@@ -43,10 +47,37 @@ public class DBManager {
         }
     }
 
-    public static User readuser (String username) {
+    public static User readUserById (int id) {
         // We are implementing try-with-resources since session implements AutoClosable
         try (Session session = DBManager.getSessionFactory().openSession()) {
-            return session.get(User.class,username);
+            return session.get(User.class,id);
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public static User readUserByUsername (String username) {
+        System.out.println(username);
+        String hql = "FROM User WHERE username = :username";
+        // We are implementing try-with-resources since session implements AutoClosable
+        try (Session session = DBManager.getSessionFactory().openSession()) {
+            Query<User> query = session.createQuery(hql, User.class);
+            query.setParameter("username", username);
+            return query.uniqueResult();
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public static List<Employee> getAllEmployees(){
+        try (Session session = DBManager.getSessionFactory().openSession()) {
+            return session.createQuery("FROM Employee",Employee.class).getResultList();
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public static Employee getEmployeeById (int id) {
+        // We are implementing try-with-resources since session implements AutoClosable
+        try (Session session = DBManager.getSessionFactory().openSession()) {
+            return session.get(Employee.class,id);
         } catch (RuntimeException e) {
             throw new RuntimeException(e);
         }

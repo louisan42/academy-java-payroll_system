@@ -1,0 +1,21 @@
+/*@import "DefaultTheme.css";*/
+
+.grid-pane {
+    -fx-background-color: transparent;
+}
+
+.title-label {
+    -fx-font-size: 24;
+    -fx-text-fill: -mfx-text-he;
+}
+
+.grid-background {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0.12, -1.0, 2.0);
+}
+
+.mfx-filter-dialog > .mfx-button {
+    -fx-border-color: #2c3e50;
+    -fx-border-radius: 2;
+}

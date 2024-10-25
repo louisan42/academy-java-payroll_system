@@ -2,19 +2,25 @@ package com.bptn.models;
 
 
 import jakarta.persistence.*;
+import javafx.scene.text.Text;
 
 @Entity
-@Table(name = "Users")
+// We are adding quotes since postgres is case-sensitive
+// and will treat regular strings as lowercase
+@Table(name = "\"Users\"")
 public class User implements Person{
-
-    private String firstName;
-    private String lastName;
-    private String username;
-    private String passwordHash;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(name = "first_name")
+    private String firstName;
+    @Column(name = "last_name")
+    private String lastName;
+    private String username;
+    @Column(name = "password_hash")
+    private String passwordHash;
+    @Column(name = "avatar_url")
     private String avatarUrl;
     private String email;
 
