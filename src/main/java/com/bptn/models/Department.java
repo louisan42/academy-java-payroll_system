@@ -3,11 +3,12 @@ package com.bptn.models;
 import jakarta.persistence.*;
 
 import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "\"Departments\"")
-public class Department {
+@Table(name = "\"Department\"")
+public class Department implements Comparable<Department> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -16,9 +17,9 @@ public class Department {
     @Column(name = "name", nullable = false, length = 25)
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "\"managerId\"")
-    private Employee manager;
+    @OneToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "\"manager_Id\"")
+    private Manager manager;
 
     @Column(name = "location", nullable = false, length = 10)
     private String location;
@@ -42,11 +43,11 @@ public class Department {
         this.name = name;
     }
 
-    public Employee getManager () {
+    public Manager getManager () {
         return manager;
     }
 
-    public void setManager (Employee manager) {
+    public void setManager (Manager manager) {
         this.manager = manager;
     }
 
@@ -66,4 +67,18 @@ public class Department {
         this.employees = employees;
     }
 
+    /**
+     * @param department 
+     * @return
+     */
+    @Override
+    public int compareTo (Department department) {
+        if (!Objects.equals(this.id, department.getId())
+            || !Objects.equals(this.name, department.getName())
+            || !Objects.equals(this.location, department.getLocation())
+        ) {
+            return 1;
+        }
+        return 0;
+    }
 }

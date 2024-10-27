@@ -1,6 +1,8 @@
 package com.bptn.services;
 
+import com.bptn.App;
 import com.bptn.models.Employee;
+import com.bptn.models.Salary;
 import com.bptn.models.User;
 import jakarta.persistence.EntityTransaction;
 import org.hibernate.Session;
@@ -9,13 +11,16 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalDate;
+import java.util.*;
 
 public class DBManager {
 
-    private static final SessionFactory sessionFactory = buildSessionFactory();
+    private final SessionFactory sessionFactory;
+
+    public DBManager(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     private static SessionFactory buildSessionFactory() {
         try {
@@ -27,17 +32,12 @@ public class DBManager {
     }
 
     public static SessionFactory getSessionFactory() {
-        return sessionFactory;
+        return buildSessionFactory();
     }
 
-    public static void shutdown() {
-        getSessionFactory().close();
-    }
-
-    public static void createUser(User user) {
+    public void createUser(User user) {
         Optional<Transaction> transaction = Optional.empty();
-        // We are implementing try-with-resources since session implements AutoClosable
-        try (Session session = DBManager.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             transaction = Optional.ofNullable(session.beginTransaction());
             session.persist(user);
             transaction.ifPresent(EntityTransaction::commit);
@@ -47,19 +47,17 @@ public class DBManager {
         }
     }
 
-    public static User readUserById (int id) {
-        // We are implementing try-with-resources since session implements AutoClosable
-        try (Session session = DBManager.getSessionFactory().openSession()) {
-            return session.get(User.class,id);
+    public User readUserById(int id) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.get(User.class, id);
         } catch (RuntimeException e) {
             throw new RuntimeException(e);
         }
     }
-    public static User readUserByUsername (String username) {
-        System.out.println(username);
+
+    public User readUserByUsername(String username) {
         String hql = "FROM User WHERE username = :username";
-        // We are implementing try-with-resources since session implements AutoClosable
-        try (Session session = DBManager.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             Query<User> query = session.createQuery(hql, User.class);
             query.setParameter("username", username);
             return query.uniqueResult();
@@ -67,19 +65,90 @@ public class DBManager {
             throw new RuntimeException(e);
         }
     }
-    public static List<Employee> getAllEmployees(){
-        try (Session session = DBManager.getSessionFactory().openSession()) {
-            return session.createQuery("FROM Employee",Employee.class).getResultList();
+
+    public List<Employee> getAllEmployees() {
+        try (Session session = sessionFactory.openSession()) {
+            return session.createQuery("FROM Employee", Employee.class).getResultList();
         } catch (RuntimeException e) {
             throw new RuntimeException(e);
         }
     }
-    public static Employee getEmployeeById (int id) {
-        // We are implementing try-with-resources since session implements AutoClosable
-        try (Session session = DBManager.getSessionFactory().openSession()) {
-            return session.get(Employee.class,id);
+
+    public Employee getEmployeeById(int id) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.get(Employee.class, id);
         } catch (RuntimeException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void updateEmployee(Map<String, Object> updatedFields, int id) {
+        Optional<Transaction> transaction = Optional.empty();
+        try (Session session = sessionFactory.openSession()) {
+            transaction = Optional.ofNullable(session.beginTransaction());
+            Employee emp = getEmployeeById(id);
+            if (emp == null) {
+                App.getLogger().warning("Employee with id " + id + " not found.");
+            }
+            if (emp != null && !emp.compareFields(updatedFields)) {
+                updatedFields.forEach((key, value) -> {
+                    switch (key) {
+                        case "email":
+                            emp.setEmail((String) value);
+                            break;
+                        case "gender":
+                            emp.setGender((String) value);
+                            break;
+                        case "startDate":
+                            emp.setStartDate((LocalDate) value);
+                            break;
+                        case "salary_id":
+                            emp.setSalary(session.get(Salary.class, (int) value));
+                            break;
+                    }
+                });
+                session.merge(emp);
+                transaction.ifPresent(EntityTransaction::commit);
+            } else {
+                transaction.ifPresent(EntityTransaction::rollback);
+            }
+        } catch (NullPointerException e) {
+            transaction.ifPresent(EntityTransaction::rollback);
+            App.getLogger().severe(Arrays.toString(e.getStackTrace()));
+        }
+    }
+
+    public Salary getSalaryById(int id) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.get(Salary.class, id);
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public  List<Salary> getAllSalaries() {
+        try (Session session = sessionFactory.openSession()) {
+            return session.createQuery("FROM Salary", Salary.class).getResultList();
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deleteEmployeeById (int employeeId) {
+        Optional<Transaction> transaction = Optional.empty();
+        try (Session session = sessionFactory.openSession()) {
+            transaction = Optional.ofNullable(session.beginTransaction());
+            Employee emp = getEmployeeById(employeeId);
+            if (emp != null) {
+                session.remove(emp);
+                transaction.ifPresent(EntityTransaction::commit);
+            } else {
+                transaction.ifPresent(EntityTransaction::rollback);
+            }
+        } catch (NullPointerException e) {
+            transaction.ifPresent(EntityTransaction::rollback);
+            App.getLogger().severe(Arrays.toString(e.getStackTrace()));
+        }
+
     }
 }

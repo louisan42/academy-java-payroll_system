@@ -7,7 +7,7 @@ import java.util.Optional;
 import com.bptn.App;
 
 import com.bptn.constants.AppConstants;
-import com.bptn.forms.FormUtils;
+import com.bptn.forms.BaseForm;
 import com.bptn.models.User;
 import com.bptn.services.AuthenticatorService;
 import com.bptn.services.DBManager;
@@ -20,7 +20,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 
-public class LoginController implements FormUtils{
+public class LoginController extends BaseForm {
 
     public TextField usernameField;
     public BorderPane loginBorderPane;
@@ -40,20 +40,19 @@ public class LoginController implements FormUtils{
         final String username = usernameField.getText();
         final String password = passwordField.getText();
         if(username.isEmpty() || password.isEmpty()){
-            FormUtils.showAlert(Alert.AlertType.ERROR, AppConstants.INPUT_ERROR,AppConstants.USERNAME_PASSWORD_REQUIRED);
+            this.showAlert(Alert.AlertType.ERROR, AppConstants.INPUT_ERROR,AppConstants.USERNAME_PASSWORD_REQUIRED);
 
         } else {
             toggleSpinner(true);
             Task<User> fetchUserTask = new Task<>(){
 
                 /**
-                 * @return 
-                 * @throws Exception
+                 * @return User object
                  */
                 @Override
-                protected User call () throws Exception {
+                protected User call () {
 
-                    return DBManager.readUserByUsername(username);
+                    return new DBManager(DBManager.getSessionFactory()).readUserByUsername(username);
                 }
             };
 
@@ -70,18 +69,18 @@ public class LoginController implements FormUtils{
                             throw new RuntimeException(e);
                         }
                     } else {
-                        FormUtils.showAlert(Alert.AlertType.ERROR,AppConstants.INVALID_CREDENTIALS,AppConstants.INVALID_CREDENTIALS);
+                        this.showAlert(Alert.AlertType.ERROR,AppConstants.INVALID_CREDENTIALS,AppConstants.INVALID_CREDENTIALS);
                     }
 
                 } else {
-                    FormUtils.showAlert(Alert.AlertType.ERROR,AppConstants.USER_NOT_FOUND,AppConstants.USER_NOT_FOUND);
+                    this.showAlert(Alert.AlertType.ERROR,AppConstants.USER_NOT_FOUND,AppConstants.USER_NOT_FOUND);
                 }
 
             });
             // In case we get any error retrieving user from DB
             fetchUserTask.setOnFailed(workerStateEvent -> {
                 toggleSpinner(false);
-                FormUtils.showAlert(Alert.AlertType.ERROR,"Error",fetchUserTask.getException().getMessage());
+                this.showAlert(Alert.AlertType.ERROR,"Error",fetchUserTask.getException().getMessage());
             });
 
             new Thread(fetchUserTask).start();

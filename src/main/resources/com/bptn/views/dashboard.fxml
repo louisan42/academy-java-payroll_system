@@ -5,7 +5,8 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane prefHeight="950" prefWidth="1520" stylesheets="@../styles/dashboard.css" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bptn.controllers.DashboardController">
+<?import io.github.palexdev.materialfx.layout.ScalableContentPane?>
+<BorderPane fx:id="mainPane" prefHeight="950" prefWidth="1520" stylesheets="@../styles/dashboard.css" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bptn.controllers.DashboardController">
     <left>
         <VBox layoutX="227" layoutY="51" prefWidth="250" styleClass="sidebar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
             <padding>
@@ -57,9 +58,9 @@
     </left>
 
     <center>
-        <StackPane fx:id="centerContent"  >
+        <ScalableContentPane autoRescale="true" fx:id="centerContent" stylesheets="@../styles/common.css" >
 <!--            <fx:include source="employee.fxml"/>-->
 
-        </StackPane>
+        </ScalableContentPane>
     </center>
 </BorderPane>

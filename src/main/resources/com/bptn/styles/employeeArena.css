@@ -1,5 +1,15 @@
-/*@import "DefaultTheme.css";*/
+@import url("common.css");
 
+
+.mfx-filter-pane .mfx-button {
+    -fx-pref-width: 135;
+    -fx-pref-height: 36;
+    -fx-background-color: #2c3e50;
+    -fx-background-radius: 15;
+    -fx-text-fill: white;
+
+    -fx-font-family: "Open Sans Bold";
+}
 .grid-pane {
     -fx-background-color: transparent;
 }
@@ -9,13 +19,12 @@
     -fx-text-fill: -mfx-text-he;
 }
 
-.grid-background {
-    -fx-background-color: white;
-    -fx-background-radius: 10;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0.12, -1.0, 2.0);
-}
-
 .mfx-filter-dialog > .mfx-button {
     -fx-border-color: #2c3e50;
     -fx-border-radius: 2;
 }
+
+.mfx-pagination .mfx-page:selected {
+    -fx-background-color: #2c3e50;
+}
+

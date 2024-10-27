@@ -1,15 +1,18 @@
 package com.bptn.controllers;
 
 import com.bptn.App;
-import com.bptn.forms.FormUtils;
+import com.bptn.forms.BaseForm;
 import com.bptn.models.Employee;
 import com.bptn.services.DBManager;
+import io.github.palexdev.materialfx.controls.MFXFilterPane;
 import io.github.palexdev.materialfx.controls.MFXPaginatedTableView;
 import io.github.palexdev.materialfx.controls.MFXProgressSpinner;
 import io.github.palexdev.materialfx.controls.MFXTableColumn;
 import io.github.palexdev.materialfx.controls.cell.MFXTableRowCell;
 import io.github.palexdev.materialfx.filter.IntegerFilter;
 import io.github.palexdev.materialfx.filter.StringFilter;
+import io.github.palexdev.materialfx.layout.ScalableContentPane;
+import io.github.palexdev.materialfx.utils.others.observables.When;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -17,9 +20,9 @@ import javafx.collections.ObservableMap;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.HPos;
-import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Parent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import java.io.IOException;
@@ -31,7 +34,7 @@ import java.util.List;
  *
  * @author Louis Amoah-Nuamah
  */
-public class EmployeeArenaController implements FormUtils {
+public class EmployeeArenaController extends BaseForm {
     public StackPane gridBackground;
     public GridPane parentGrid;
     @FXML
@@ -50,6 +53,11 @@ public class EmployeeArenaController implements FormUtils {
         setupTable();
         loadData();
         setupRowSelectionListener();
+
+        tableView.autosizeColumnsOnInitialization();
+        When.onChanged(tableView.currentPageProperty())
+                .then((oldValue,newValue) -> tableView.autosizeColumns()).listen();
+
     }
 
     /**
@@ -86,29 +94,35 @@ public class EmployeeArenaController implements FormUtils {
         MFXTableColumn<Employee> nameColumn = new MFXTableColumn<>("Name", false, Comparator.comparing(Employee::getFullName));
         MFXTableColumn<Employee> emailColumn = new MFXTableColumn<>("Email", false, Comparator.comparing(Employee::getEmail));
         MFXTableColumn<Employee> startDate = new MFXTableColumn<>("Start Date", false, Comparator.comparing(Employee::getStartDate));
-        MFXTableColumn<Employee> departmentId = new MFXTableColumn<>("Department ID", false, Comparator.comparing(Employee::getDepartmentId));
-        MFXTableColumn<Employee> salary = new MFXTableColumn<>("Salary", false, Comparator.comparing(Employee::getSalary));
+        MFXTableColumn<Employee> departmentId = new MFXTableColumn<>("Department ID", false, Comparator.comparing(employee -> employee.getDepartment().getId()));
+        MFXTableColumn<Employee> salary = new MFXTableColumn<>("Salary", false, Comparator.comparing(employee -> employee.getSalary().getName()));
 
 
         idColumn.setRowCellFactory(employee -> new MFXTableRowCell<>(Employee::getId));
         nameColumn.setRowCellFactory(employee -> new MFXTableRowCell<>(Employee::getFullName));
         emailColumn.setRowCellFactory(employee -> new MFXTableRowCell<>(Employee::getEmail));
         startDate.setRowCellFactory(employee -> new MFXTableRowCell<>(Employee::getStartDate));
-        departmentId.setRowCellFactory(employee -> new MFXTableRowCell<>(Employee::getDepartmentId));
-        salary.setRowCellFactory(employee -> new MFXTableRowCell<>(Employee::getSalary));
+        departmentId.setRowCellFactory(employee -> new MFXTableRowCell<>(employee1 -> employee1.getDepartment().getId()));
+        salary.setRowCellFactory(employee -> new MFXTableRowCell<>(employee1 -> employee1.getSalary().getName()));
 
         emailColumn.setMinWidth(300.0);
         nameColumn.setMinWidth(200.0);
 
         tableView.getTableColumns().addAll(idColumn, nameColumn, emailColumn, startDate, departmentId, salary);
 
+
     // Setup filter for the table view
-        tableView.getFilters().setAll(new IntegerFilter<>("ID", Employee::getId), new StringFilter<>("Name", Employee::getFullName), new StringFilter<>("Email", Employee::getEmail), new IntegerFilter<>("Department Id", Employee::getDepartmentId), new StringFilter<>("Salary level", Employee::getSalary));
+        tableView.getFilters().setAll(new IntegerFilter<>("ID", Employee::getId),
+                new StringFilter<>("Name", Employee::getFullName),
+                new StringFilter<>("Email", Employee::getEmail),
+                new IntegerFilter<>("Department Id", employee -> employee.getDepartment().getId()),
+                new StringFilter<>("Salary level", employee -> employee.getSalary().getName()));
 
         tableView.getSelectionModel().setAllowsMultipleSelection(false);
         // Set up pagination
         tableView.setCurrentPage(0);
         tableView.setRowsPerPage(20);
+
 
     }
 
@@ -121,7 +135,7 @@ public class EmployeeArenaController implements FormUtils {
 
         // Fetch the data in a background thread to avoid blocking the UI
         new Thread(() -> {
-            List<Employee> employees = DBManager.getAllEmployees();
+            List<Employee> employees = new DBManager(DBManager.getSessionFactory()).getAllEmployees();
 
             // Update the table view on the JavaFX Application Thread
             Platform.runLater(() -> {
@@ -173,14 +187,15 @@ public class EmployeeArenaController implements FormUtils {
         EmployeeController employeeController = loader.getController();
         employeeController.setDetails(emp);
 
-        // Get the stackPane from the dashboardController
-        StackPane stackPane = dashboardController.getCenterContent();
+        // Get the pane from the dashboardController
+        BorderPane pane = dashboardController.getMainPane();
 
-        // Add the employeeView to the stackPane
+        // Add the employeeView to the pane
         Platform.runLater(() -> {
-            stackPane.getChildren().clear();
-            stackPane.getChildren().add(employeeView);
-            stackPane.layout();
+            ScalableContentPane scalableContentPane = new ScalableContentPane();
+            scalableContentPane.setContent(employeeView);
+            pane.setCenter(employeeView);
+            pane.layout();
         });
 
     }

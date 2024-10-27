@@ -1,13 +1,15 @@
 package com.bptn.controllers;
 
 import com.bptn.App;
-import com.bptn.forms.FormUtils;
+import com.bptn.forms.BaseForm;
 import io.github.palexdev.materialfx.controls.MFXProgressSpinner;
+import io.github.palexdev.materialfx.layout.ScalableContentPane;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.fxml.FXML;
 
@@ -18,15 +20,16 @@ import java.io.IOException;
  *
  * @author Louis Amoah-Nuamah
  */
-public class DashboardController implements FormUtils {
+public class DashboardController extends BaseForm {
 
 
+    public BorderPane mainPane;
     @FXML
-    private  StackPane centerContent;
+    private ScalableContentPane centerContent;
     private MFXProgressSpinner progressSpinner;
 
-    public StackPane getCenterContent () {
-        return centerContent;
+    public BorderPane getMainPane () {
+        return mainPane;
     }
 
     @FXML
@@ -34,7 +37,10 @@ public class DashboardController implements FormUtils {
         progressSpinner = new MFXProgressSpinner();
         progressSpinner.setRadius(50);
         progressSpinner.setVisible(false);
-        centerContent.getChildren().add(progressSpinner);
+//        centerContent.getChildren().add(progressSpinner);
+        StackPane progressPane = new StackPane();
+        progressPane.getChildren().add(progressSpinner);
+        mainPane.setCenter(progressPane);
         showOverview();
     }
     @FXML
@@ -53,8 +59,13 @@ public class DashboardController implements FormUtils {
             EmployeeArenaController employeeArenaController = loader.getController();
             employeeArenaController.setDashboardController(this);
 
-            centerContent.getChildren().setAll(employeeArenaView);
-        } catch (IOException e) {
+//            centerContent.getChildren().setAll(employeeArenaView);
+//            centerContent.setContent(new StackPane());
+//            centerContent.setContent(employeeArenaView);
+            ScalableContentPane pane = new ScalableContentPane();
+            pane.setContent(employeeArenaView);
+            mainPane.setCenter(pane);
+        } catch (IOException | IllegalArgumentException e) {
             e.printStackTrace();
         } finally {
         }
@@ -71,8 +82,14 @@ public class DashboardController implements FormUtils {
     public  void loadContent (String fxml) {
         try {
             Node content = FXMLLoader.load(App.class.getResource(fxml));
-            centerContent.getChildren().setAll(content);
-        } catch (IOException e) {
+//            centerContent.getChildren().setAll(content);
+//            centerContent.setContent(new StackPane());
+//            centerContent.setContent(content);
+            ScalableContentPane pane = new ScalableContentPane();
+            pane.setContent(content);
+            mainPane.setCenter(pane);
+
+        } catch (IOException|IllegalArgumentException e) {
             e.printStackTrace();
         }
     }

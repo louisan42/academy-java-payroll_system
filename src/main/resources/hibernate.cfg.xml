@@ -9,10 +9,13 @@
         <property name="hibernate.connection.url">jdbc:postgresql://localhost:32773/Project</property>
         <property name="hibernate.connection.username">postgres</property>
         <property name="hibernate.connection.password">plot82blockb</property>
-        <property name="hibernate.hbm2ddl.auto">none</property>
+        <property name="hibernate.hbm2ddl.auto">validate</property>
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.physical_naming_strategy">org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl</property>
         <mapping class="com.bptn.models.User"/>
         <mapping class="com.bptn.models.Employee"/>
+        <mapping class="com.bptn.models.Salary"/>
+        <mapping class="com.bptn.models.Department"/>
+        <mapping class="com.bptn.models.Manager"/>
     </session-factory>
 </hibernate-configuration>

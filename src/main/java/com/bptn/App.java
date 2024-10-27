@@ -4,6 +4,8 @@ import com.bptn.controllers.DashboardController;
 import com.bptn.controllers.EmployeeArenaController;
 import com.bptn.models.AppUser;
 import com.bptn.services.CsvAppUserLoader;
+import com.bptn.services.DBManager;
+import io.github.palexdev.materialfx.MFXResourcesLoader;
 import io.github.palexdev.materialfx.theming.JavaFXThemes;
 import io.github.palexdev.materialfx.theming.MaterialFXStylesheets;
 import io.github.palexdev.materialfx.theming.UserAgentBuilder;
@@ -16,6 +18,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
+import java.util.Objects;
+import java.util.logging.Logger;
+
 
 
 /**
@@ -24,9 +29,14 @@ import java.util.Map;
 public class App extends Application {
 
     private static Scene mainScene;
+    private static final Logger logger = Logger.getLogger(App.class.getName());
+
 
     public static Stage getStage () {
         return stage;
+    }
+    public static Logger getLogger () {
+        return logger;
     }
 
     private static Stage stage;
@@ -36,43 +46,13 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        logger.info(App.class + ":Starting application");
 
         // Load user database from csv file
         CsvAppUserLoader userDb = new CsvAppUserLoader();
         users = userDb.loadFile(AppConstants.USERS_CSV_FILE);
 
-        //Link these two controllers to share resources
-//        FXMLLoader dashboardLoader = loadFXML("views/dashboard");
-//        Parent dashboardRoot = dashboardLoader.load();
-//        DashboardController dashboardController = dashboardLoader.getController();
-//
-//        FXMLLoader employeeArenaLoader = loadFXML("views/employeeArena");
-//        Parent employeeArenaRoot = employeeArenaLoader.load();
-//
-//        EmployeeArenaController employeeArenaController = employeeArenaLoader.getController();
-////        employeeArenaLoader.setControllerFactory(empArena -> {
-////            if (empArena == EmployeeArenaController.class) {
-////                return new EmployeeArenaController(dashboardController);
-////            } else {
-////                try {
-////                    return empArena.getDeclaredConstructor().newInstance();
-////                } catch (InstantiationException | IllegalAccessException | NoSuchMethodException |
-////                         InvocationTargetException e) {
-////                    throw new RuntimeException(e);
-////                }
-////            }
-////        });
-//        dashboardController.setEmployeeArenaController(employeeArenaController);
-//        employeeArenaController.setDashboardController(dashboardController);
-
-        // Ensure initialization happens after setting controllers
-//        employeeArenaController.initialize();
-//        dashboardController.initialize();
-
-
         Scene loginScene = new Scene(loadFXML("views/dashboard").load());
-//        Scene loginScene = new Scene(employeeArenaRoot);
-
 
         App.stage = stage;
         stage.setScene(loginScene);
