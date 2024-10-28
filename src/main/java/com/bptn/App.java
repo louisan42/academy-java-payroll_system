@@ -59,7 +59,8 @@ public class App extends Application {
         CsvAppUserLoader userDb = new CsvAppUserLoader();
         users = userDb.loadFile(AppConstants.USERS_CSV_FILE);
 
-        Scene loginScene = new Scene(loadFXML("views/dashboard").load());
+        Scene loginScene = new Scene(loadFXML("views/login").load());
+        mainScene = new Scene(loadFXML("views/dashboard").load());
 
         App.stage = stage;
         stage.setScene(loginScene);

@@ -64,7 +64,7 @@ public class LoginController extends BaseForm {
                     if (authService.verifyPassword(password,passwordHash)){
                         StateManager.setUser(user.get());
                         try {
-                            App.switchScene("view/dashboard");
+                            App.switchScene("views/dashboard");
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
