@@ -57,11 +57,31 @@ public class StatementController extends BaseForm {
     }
 
     public void updateStatement (ActionEvent actionEvent) {
+        if (!editAmount.getText().isEmpty() && editStartDate.getValue() != null && editEndDate.getValue() != null && editSalary.getValue() != null) {
+            DBManager dbManager = new DBManager(DBManager.getSessionFactory());
+            Statement statement = dbManager.getStatementById(Integer.parseInt(searchId.getText()));
+            statement.setAmount(Double.parseDouble(editAmount.getText()));
+            statement.setStartDate(editStartDate.getValue());
+            statement.setEndDate(editEndDate.getValue());
+            statement.setSalary(editSalary.getValue());
+            dbManager.updateStatement(statement);
+        }
     }
 
     public void searchStatement (ActionEvent actionEvent) {
         if (!searchId.getText().isEmpty()) {
-
+            DBManager dbManager = new DBManager(DBManager.getSessionFactory());
+            Statement statement = dbManager.getStatementById(Integer.parseInt(searchId.getText()));
+            editAmount.setText(statement.getAmount().toString());
+            editAmount.setDisable(false);
+            editStartDate.setValue(statement.getStartDate());
+            editStartDate.setDisable(false);
+            editEndDate.setValue(statement.getEndDate());
+            editEndDate.setDisable(false);
+            editSalary.setValue(statement.getSalary());
+            editSalary.setDisable(false);
+            searchId.setDisable(true);
+            employeeName.setText(statement.getEmployee().getFullName());
         }
 
     }

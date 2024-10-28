@@ -177,6 +177,20 @@ public class DBManager {
         }
         return success;
     }
+    public  boolean updateStatement(Statement statement) {
+        boolean success = false;
+        Optional<Transaction> transaction = Optional.empty();
+        try (Session session = sessionFactory.openSession()) {
+            transaction = Optional.ofNullable(session.beginTransaction());
+            session.merge(statement);
+            transaction.ifPresent(EntityTransaction::commit);
+            success = true;
+        } catch (NullPointerException e) {
+            transaction.ifPresent(EntityTransaction::rollback);
+            App.getLogger().severe(Arrays.toString(e.getStackTrace()));
+        }
+        return success;
+    }
 
     public Statement getStatementById(int id) {
         try (Session session = sessionFactory.openSession()) {
