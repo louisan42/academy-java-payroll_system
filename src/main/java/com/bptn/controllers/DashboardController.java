@@ -59,19 +59,18 @@ public class DashboardController extends BaseForm {
             EmployeeArenaController employeeArenaController = loader.getController();
             employeeArenaController.setDashboardController(this);
 
-//            centerContent.getChildren().setAll(employeeArenaView);
-//            centerContent.setContent(new StackPane());
-//            centerContent.setContent(employeeArenaView);
             ScalableContentPane pane = new ScalableContentPane();
             pane.setContent(employeeArenaView);
             mainPane.setCenter(pane);
         } catch (IOException | IllegalArgumentException e) {
             e.printStackTrace();
-        } finally {
         }
     }
     @FXML
     public void switchToAdmin (ActionEvent actionEvent) {
+        toggleSpinner(true);
+        loadContent("views/statements.fxml");
+        toggleSpinner(false);
     }
 
 /**

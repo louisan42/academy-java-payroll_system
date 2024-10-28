@@ -1,152 +1,186 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import io.github.palexdev.materialfx.controls.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXComboBox?>
+<?import io.github.palexdev.materialfx.controls.MFXDatePicker?>
+<?import io.github.palexdev.materialfx.controls.MFXListView?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1100.0" stylesheets="@../styles/employee.css" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bptn.controllers.EmployeeController">
-   <left>
-     <VBox prefHeight="815.0" prefWidth="331.0" spacing="5.0" styleClass="card" BorderPane.alignment="CENTER">
-       <padding>
-         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-       </padding>
-       <BorderPane.margin>
-         <Insets bottom="15.0" left="15.0" />
-       </BorderPane.margin>
-       <StackPane fx:id="logoContainer" style="-fx-background-color: #F4F4F4" styleClass="card">
-              <ImageView fx:id="avatarContainer" fitHeight="224.0" fitWidth="230.0" pickOnBounds="true" preserveRatio="true" />
-            <padding>
-               <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-            </padding>
-            <VBox.margin>
-               <Insets bottom="20.0" left="20.0" right="20.0" top="80.0" />
-            </VBox.margin>
-       </StackPane>
-       <HBox alignment="CENTER">
-         <Label fx:id="employeeIdLbl" alignment="BASELINE_CENTER" contentDisplay="CENTER" text="ID:">
-           <font>
-             <Font name="System Bold" size="21.0" />
-           </font>
-         </Label>
-       </HBox>
-     </VBox>
-   </left>
-   <top>
-      <Label text="Employee details" BorderPane.alignment="TOP_LEFT">
-         <font>
-            <Font name="System Bold" size="28.0" />
-         </font>
-         <padding>
-            <Insets bottom="15.0" left="15.0" top="15.0" />
-         </padding>
-      </Label>
-   </top>
-   <center>
-     <AnchorPane fx:id="centerPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-       <BorderPane.margin>
-         <Insets bottom="10.0" left="10.0" right="10.0" />
-       </BorderPane.margin>
-       <HBox prefHeight="80.0" prefWidth="500.0" spacing="50.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="15.0">
-         <padding>
-           <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-         </padding>
-         <MFXButton fx:id="generateReport" buttonType="RAISED" onAction="#generateReport" prefHeight="40.0" prefWidth="108.0" style="-fx-background-color: #414aea; -fx-text-fill: white;" text="Get PayStub" textAlignment="CENTER" />
-         <MFXButton fx:id="saveButton" buttonType="RAISED" onAction="#saveChanges" prefHeight="40.0" prefWidth="108.0" style="-fx-background-color: #1fc916; -fx-border-radius: 0; -fx-text-fill: white;" text="Save" />
-         <MFXButton fx:id="deleteButton" buttonType="RAISED" onAction="#deleteEmployee" prefHeight="40.0" prefWidth="108.0" style="-fx-background-color: #c9161f; -fx-text-fill: white;" text="Delete" textAlignment="CENTER" />
-       </HBox>
-       <VBox prefHeight="388.0" prefWidth="715.0" spacing="35.0" styleClass="card" AnchorPane.topAnchor="0.0">
-         <padding>
-           <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </padding>
-         <GridPane>
-           <columnConstraints>
-             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-           </columnConstraints>
-           <rowConstraints>
-             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-           </rowConstraints>
-           <Label text="Personal details">
-             <font>
-               <Font size="24.0" />
-             </font>
-             <padding>
-               <Insets left="10.0" top="10.0" />
-             </padding>
-           </Label>
-           <StackPane fx:id="editButtonContainer" alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#toggleDisableFields" prefHeight="45.0" prefWidth="45.0" styleClass="image-button" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
-             <ImageView fx:id="editButton" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER">
-               <Image url="@../static/edit.png" />
-             </ImageView>
-             <cursor>
-               <Cursor fx:constant="HAND" />
-             </cursor>
-           </StackPane>
-         </GridPane>
-         <MFXTextField fx:id="fullName" floatingText="Full name" floatingTextGap="8.0" maxWidth="700.0" selectable="false" style="-fx-background-color: #F7F8FF; -fx-border-radius: 5; -fx-border-color: none;">
-           <font>
-             <Font size="18.0" />
-           </font>
-         </MFXTextField>
-         <HBox spacing="50.0">
-           <MFXTextField fx:id="gender" floatingText="Gender" floatingTextGap="8.0" maxWidth="246.0" prefHeight="65.0" prefWidth="246.0" selectable="false" style="-fx-background-color: #F7F8FF; -fx-border-radius: 5; -fx-border-color: none;">
-             <font>
-               <Font size="18.0" />
-             </font>
-           </MFXTextField>
-           <MFXTextField fx:id="email" alignment="BASELINE_LEFT" floatingText="Email" floatingTextGap="8.0" maxWidth="399.0" prefHeight="65.0" prefWidth="399.0" selectable="false" style="-fx-background-color: #F7F8FF; -fx-border-radius: 5; -fx-border-color: none;">
-             <font>
-               <Font size="18.0" />
-             </font>
-           </MFXTextField>
-         </HBox>
-         <HBox layoutX="20.0" layoutY="190.0" spacing="50.0">
-           <MFXDatePicker fx:id="startDate" floatingText="Start date" floatingTextGap="8.0" maxWidth="490.0" prefHeight="65.0" prefWidth="490.0" selectable="false" style="-fx-background-color: #F7F8FF; -fx-border-radius: 5; -fx-border-color: none;">
-             <font>
-               <Font size="18.0" />
-             </font>
-           </MFXDatePicker>
-           <MFXComboBox fx:id="salary" alignment="BASELINE_LEFT" floatingText="Salary" floatingTextGap="8.0" maxWidth="402.0" prefHeight="65.0" prefWidth="402.0" selectable="false" style="-fx-background-color: #F7F8FF; -fx-border-radius: 5; -fx-border-color: none;">
-             <font>
-               <Font size="18.0" />
-             </font>
-           </MFXComboBox>
-         </HBox>
-       </VBox>
-       <VBox layoutY="536.0" prefHeight="285.0" prefWidth="715.0" spacing="35.0" styleClass="card" AnchorPane.bottomAnchor="100.0">
-         <padding>
-           <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </padding>
-         <Label text="Department Info">
-           <font>
-             <Font size="24.0" />
-           </font>
-           <padding>
-             <Insets left="10.0" top="10.0" />
-           </padding>
-         </Label>
-         <HBox spacing="50.0">
-           <MFXTextField fx:id="departmentName" floatingText="Department name" floatingTextGap="8.0" maxWidth="372.0" prefHeight="65.0" prefWidth="372.0" selectable="false" style="-fx-background-color: #F7F8FF; -fx-border-radius: 5; -fx-border-color: none;">
-             <font>
-               <Font size="18.0" />
-             </font>
-           </MFXTextField>
-           <MFXTextField fx:id="departmentLocation" alignment="BASELINE_LEFT" floatingText="Location" floatingTextGap="8.0" maxWidth="399.0" prefHeight="65.0" prefWidth="399.0" selectable="false" style="-fx-background-color: #F7F8FF; -fx-border-radius: 5; -fx-border-color: none;">
-             <font>
-               <Font size="18.0" />
-             </font>
-           </MFXTextField>
-         </HBox>
-         <MFXTextField fx:id="mangerName" floatingText="Manager's name" floatingTextGap="8.0" maxWidth="700.0" selectable="false" style="-fx-background-color: #F7F8FF; -fx-border-radius: 5; -fx-border-color: none;">
-           <font>
-             <Font size="18.0" />
-           </font>
-         </MFXTextField>
-       </VBox>
-     </AnchorPane>
-   </center>
-</BorderPane>
+<TabPane stylesheets="@../styles/employee.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bptn.controllers.EmployeeController">
+   <tabs>
+      <Tab text="Employee Details">
+         <content>
+            <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1100.0" stylesheets="@../styles/employee.css">
+               <left>
+                 <VBox prefHeight="815.0" prefWidth="331.0" spacing="5.0" styleClass="card" BorderPane.alignment="CENTER">
+                   <padding>
+                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                   </padding>
+                   <BorderPane.margin>
+                     <Insets bottom="15.0" left="15.0" />
+                   </BorderPane.margin>
+                   <StackPane fx:id="logoContainer" style="-fx-background-color: #F4F4F4" styleClass="card">
+                          <ImageView fx:id="avatarContainer" fitHeight="224.0" fitWidth="230.0" pickOnBounds="true" preserveRatio="true" />
+                        <padding>
+                           <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                        </padding>
+                        <VBox.margin>
+                           <Insets bottom="20.0" left="20.0" right="20.0" top="80.0" />
+                        </VBox.margin>
+                   </StackPane>
+                   <HBox alignment="CENTER">
+                     <Label fx:id="employeeIdLbl" alignment="BASELINE_CENTER" contentDisplay="CENTER" text="ID:">
+                       <font>
+                         <Font name="System Bold" size="21.0" />
+                       </font>
+                     </Label>
+                   </HBox>
+                 </VBox>
+               </left>
+               <top>
+                  <Label text="Employee details" BorderPane.alignment="TOP_LEFT">
+                     <font>
+                        <Font name="System Bold" size="28.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="15.0" left="15.0" top="15.0" />
+                     </padding>
+                  </Label>
+               </top>
+               <center>
+                 <AnchorPane fx:id="centerPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                   <BorderPane.margin>
+                     <Insets bottom="10.0" left="10.0" right="10.0" />
+                   </BorderPane.margin>
+                   <HBox prefHeight="80.0" prefWidth="500.0" spacing="50.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="15.0">
+                     <padding>
+                       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                     </padding>
+                     <MFXButton fx:id="saveButton" buttonType="RAISED" onAction="#saveChanges" prefHeight="40.0" prefWidth="108.0" style="-fx-background-color: #1fc916; -fx-border-radius: 0; -fx-text-fill: white;" text="Save" />
+                     <MFXButton fx:id="deleteButton" buttonType="RAISED" onAction="#deleteEmployee" prefHeight="40.0" prefWidth="108.0" style="-fx-background-color: #c9161f; -fx-text-fill: white;" text="Delete" textAlignment="CENTER" />
+                   </HBox>
+                   <VBox prefHeight="388.0" prefWidth="715.0" spacing="35.0" styleClass="card" AnchorPane.topAnchor="0.0">
+                     <padding>
+                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                     <GridPane>
+                       <columnConstraints>
+                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                       </columnConstraints>
+                       <rowConstraints>
+                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                       </rowConstraints>
+                       <Label text="Personal details">
+                         <font>
+                           <Font size="24.0" />
+                         </font>
+                         <padding>
+                           <Insets left="10.0" top="10.0" />
+                         </padding>
+                       </Label>
+                       <StackPane fx:id="editButtonContainer" alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#toggleDisableFields" prefHeight="45.0" prefWidth="45.0" styleClass="image-button" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+                         <ImageView fx:id="editButton" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER">
+                           <Image url="@../static/edit.png" />
+                         </ImageView>
+                         <cursor>
+                           <Cursor fx:constant="HAND" />
+                         </cursor>
+                       </StackPane>
+                     </GridPane>
+                     <MFXTextField fx:id="fullName" floatingText="Full name" floatingTextGap="8.0" maxWidth="700.0" selectable="false" style="-fx-background-color: #F7F8FF; -fx-border-radius: 5; -fx-border-color: none;">
+                       <font>
+                         <Font size="18.0" />
+                       </font>
+                     </MFXTextField>
+                     <HBox spacing="50.0">
+                       <MFXTextField fx:id="gender" floatingText="Gender" floatingTextGap="8.0" maxWidth="246.0" prefHeight="65.0" prefWidth="246.0" selectable="false" style="-fx-background-color: #F7F8FF; -fx-border-radius: 5; -fx-border-color: none;">
+                         <font>
+                           <Font size="18.0" />
+                         </font>
+                       </MFXTextField>
+                       <MFXTextField fx:id="email" alignment="BASELINE_LEFT" floatingText="Email" floatingTextGap="8.0" maxWidth="399.0" prefHeight="65.0" prefWidth="399.0" selectable="false" style="-fx-background-color: #F7F8FF; -fx-border-radius: 5; -fx-border-color: none;">
+                         <font>
+                           <Font size="18.0" />
+                         </font>
+                       </MFXTextField>
+                     </HBox>
+                     <HBox layoutX="20.0" layoutY="190.0" spacing="50.0">
+                       <MFXDatePicker fx:id="startDate" floatMode="INLINE" floatingText="Start date" floatingTextGap="8.0" maxWidth="490.0" prefHeight="65.0" prefWidth="490.0" selectable="false" style="-fx-background-color: #F7F8FF; -fx-border-radius: 5; -fx-border-color: none;">
+                         <font>
+                           <Font size="18.0" />
+                         </font>
+                       </MFXDatePicker>
+                       <MFXComboBox fx:id="salary" alignment="BASELINE_LEFT" floatingText="Salary" floatingTextGap="8.0" maxWidth="402.0" prefHeight="65.0" prefWidth="402.0" selectable="false" style="-fx-background-color: #F7F8FF; -fx-border-radius: 5; -fx-border-color: none;">
+                         <font>
+                           <Font size="18.0" />
+                         </font>
+                       </MFXComboBox>
+                     </HBox>
+                   </VBox>
+                   <VBox layoutY="536.0" prefHeight="285.0" prefWidth="715.0" spacing="35.0" styleClass="card" AnchorPane.bottomAnchor="100.0">
+                     <padding>
+                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                     <Label text="Department Info">
+                       <font>
+                         <Font size="24.0" />
+                       </font>
+                       <padding>
+                         <Insets left="10.0" top="10.0" />
+                       </padding>
+                     </Label>
+                     <HBox spacing="50.0">
+                       <MFXTextField fx:id="departmentName" floatingText="Department name" floatingTextGap="8.0" maxWidth="372.0" prefHeight="65.0" prefWidth="372.0" selectable="false" style="-fx-background-color: #F7F8FF; -fx-border-radius: 5; -fx-border-color: none;">
+                         <font>
+                           <Font size="18.0" />
+                         </font>
+                       </MFXTextField>
+                       <MFXTextField fx:id="departmentLocation" alignment="BASELINE_LEFT" floatingText="Location" floatingTextGap="8.0" maxWidth="399.0" prefHeight="65.0" prefWidth="399.0" selectable="false" style="-fx-background-color: #F7F8FF; -fx-border-radius: 5; -fx-border-color: none;">
+                         <font>
+                           <Font size="18.0" />
+                         </font>
+                       </MFXTextField>
+                     </HBox>
+                     <MFXTextField fx:id="mangerName" floatingText="Manager's name" floatingTextGap="8.0" maxWidth="700.0" selectable="false" style="-fx-background-color: #F7F8FF; -fx-border-radius: 5; -fx-border-color: none;">
+                       <font>
+                         <Font size="18.0" />
+                       </font>
+                     </MFXTextField>
+                   </VBox>
+                 </AnchorPane>
+               </center>
+            </BorderPane>
+         </content>
+      </Tab>
+      <Tab text="Statements">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <MFXListView fx:id="listContainer" prefHeight="200.0" prefWidth="200.0" styleClass="card" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+                     <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                     </padding></MFXListView>
+                   <MFXButton fx:id="generateReport" buttonType="RAISED" onAction="#generateReport" prefHeight="40.0" prefWidth="139.0" style="-fx-background-color: #414aea; -fx-text-fill: white;" text="Print Statement" textAlignment="CENTER" AnchorPane.bottomAnchor="50.0" AnchorPane.rightAnchor="40.0" />
+               </children>
+            </AnchorPane>
+        </content>
+      </Tab>
+   </tabs>
+</TabPane>

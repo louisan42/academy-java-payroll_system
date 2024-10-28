@@ -17,5 +17,6 @@
         <mapping class="com.bptn.models.Salary"/>
         <mapping class="com.bptn.models.Department"/>
         <mapping class="com.bptn.models.Manager"/>
+        <mapping class="com.bptn.models.Statement"/>
     </session-factory>
 </hibernate-configuration>

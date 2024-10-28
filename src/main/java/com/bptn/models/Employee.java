@@ -3,7 +3,9 @@ package com.bptn.models;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Set;
 
 @Entity
 @Table(name = "\"Employee\"")
@@ -15,6 +17,9 @@ public class Employee implements Person{
 
     @Column(name = "first_name", nullable = false, length = 256)
     private String firstName;
+
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "employee")
+    private Set<Statement> statements = new LinkedHashSet<>();
 
     public Employee (String firstName, String lastName,String gender, LocalDate startDate, Department department, Salary salary) {
         this.firstName = firstName;
@@ -48,6 +53,14 @@ public class Employee implements Person{
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "salary_id")
     private Salary salary;
+
+    public Set<Statement> getStatements () {
+        return statements;
+    }
+
+    public void setStatements (Set<Statement> statements) {
+        this.statements = statements;
+    }
 
     public Employee () {
 

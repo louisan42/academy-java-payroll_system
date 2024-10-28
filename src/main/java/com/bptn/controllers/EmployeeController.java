@@ -3,17 +3,19 @@ package com.bptn.controllers;
 import com.bptn.forms.BaseForm;
 import com.bptn.models.Employee;
 import com.bptn.models.Salary;
+import com.bptn.models.Statement;
 import com.bptn.services.DBManager;
+import com.bptn.services.StateManager;
 import com.bptn.utils.PDFUtils;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXComboBox;
+import io.github.palexdev.materialfx.controls.MFXListView;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -45,7 +47,8 @@ public class EmployeeController extends BaseForm {
     public Label employeeIdLbl;
     public MFXButton generateReport;
     public AnchorPane centerPane;
-    private  ChangeListener<String> changeListener;
+    public MFXListView<Statement> listContainer;
+    private ChangeListener<String> changeListener;
     DBManager dbManager;
 
     public void editEmployee () {
@@ -54,8 +57,8 @@ public class EmployeeController extends BaseForm {
     }
 
     @FXML
-    public void initialize() {
-        changeListener= (observable, oldValue, newValue) -> saveButton.setDisable(false);
+    public void initialize () {
+        changeListener = (observable, oldValue, newValue) -> saveButton.setDisable(false);
 
         fullName.setDisable(true);
         departmentName.setDisable(true);
@@ -65,12 +68,11 @@ public class EmployeeController extends BaseForm {
         // Initially disable the save button
         saveButton.setDisable(true);
 
-        dbManager = new DBManager(DBManager.getSessionFactory());
-        List<Salary> allSalaries = dbManager.getAllSalaries();
+        List<Salary> allSalaries = StateManager.getSalaries();
         salary.setItems(FXCollections.observableArrayList(allSalaries.stream().sorted().collect(Collectors.toList())));
     }
 
-    public void setProfilePicture(String imageUrl) {
+    public void setProfilePicture (String imageUrl) {
         // Create an Image object
         Image image = new Image(imageUrl);
 
@@ -83,7 +85,6 @@ public class EmployeeController extends BaseForm {
         avatarContainer.setPreserveRatio(true);
         avatarContainer.setSmooth(true);
         avatarContainer.setCache(true);
-
 
 
     }
@@ -103,6 +104,8 @@ public class EmployeeController extends BaseForm {
         String empId = employeeIdLbl.getText().concat(employee.getId().toString());
         employeeIdLbl.setText(empId);
         setProfilePicture(employee.getAvatarUrl());
+        listContainer.setItems(FXCollections.observableArrayList(employee.getStatements()));
+
 
         // Disable the text fields
         toggleDisableFields(true);
@@ -114,26 +117,20 @@ public class EmployeeController extends BaseForm {
     }
 
     public void toggleDisableFields (boolean disable) {
-//        fullName.setDisable(disable);
         gender.setDisable(disable);
         email.setDisable(disable);
         startDate.setDisable(disable);
         salary.setDisable(disable);
-//        departmentName.setDisable(disable);
-//        mangerName.setDisable(disable);
-//        departmentLocation.setDisable(disable);
-
-
     }
 
     public void saveChanges () {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-        Map<String,Object> newEmployeeData = new HashMap<>();
-        newEmployeeData.put("gender",gender.getText());
-        newEmployeeData.put("email",email.getText());
-        newEmployeeData.put("date",LocalDate.parse(startDate.getText(),formatter));
-        newEmployeeData.put("salary_id",salary.getValue().getId());
+        Map<String, Object> newEmployeeData = new HashMap<>();
+        newEmployeeData.put("gender", gender.getText());
+        newEmployeeData.put("email", email.getText());
+        newEmployeeData.put("date", LocalDate.parse(startDate.getText(), formatter));
+        newEmployeeData.put("salary_id", salary.getValue().getId());
         int employeeId = Integer.parseInt(employeeIdLbl.getText().replace("ID:", ""));
 
         dbManager.updateEmployee(newEmployeeData, employeeId);
@@ -142,7 +139,17 @@ public class EmployeeController extends BaseForm {
 
     public void deleteEmployee () {
         int employeeId = Integer.parseInt(employeeIdLbl.getText().replace("ID:", ""));
-        dbManager.deleteEmployeeById(employeeId);
+        boolean success = dbManager.deleteEmployeeById(employeeId);
+        if (success) {
+            this.showDialog((Stage) deleteButton.getScene().getWindow(), centerPane, "Employee Deleted", "Employee deleted successfully", "success", response -> {
+//                if (response.equalsIgnoreCase("Confirmed")) {
+////                    this.closeWindow(deleteButton);
+//                }
+            });
+        } else {
+            this.showDialog((Stage) deleteButton.getScene().getWindow(), centerPane, "Deletion Failed", "Employee deletion failed", "error", response -> {
+            });
+        }
     }
 
     public void toggleDisableFields (MouseEvent mouseEvent) {
@@ -153,13 +160,14 @@ public class EmployeeController extends BaseForm {
 
     public void generateReport (ActionEvent actionEvent) {
         Stage stage = (Stage) generateReport.getScene().getWindow();
-        this.showGenericDialog(stage, centerPane, "Generate Report", "Do you want to generate a report for this employee?",
-                "warning", response ->{
-                        System.out.println("Response " + response);
-                        if (response.equalsIgnoreCase("Confirmed")) {
-                            PDFUtils statement = new PDFUtils();
-                            statement.createPayStub(employeeIdLbl.getText().replace("ID:", ""));
-                        }
+        this.showDialog(stage, centerPane, "Generate Report", "Do you want to generate a report for this employee?",
+                "warning", response -> {
+                    if (response.equalsIgnoreCase("Confirmed")) {
+
+                        Statement statement = listContainer.getSelectionModel().getSelectedValue();
+                        PDFUtils statementPDF = new PDFUtils(statement);
+                        statementPDF.createPayStub();
+                    }
                 });
 //        this.showInfo("Report generated successfully", "Report", "Report Generated");
 

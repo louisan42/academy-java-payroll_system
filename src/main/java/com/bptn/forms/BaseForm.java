@@ -7,10 +7,8 @@ import io.github.palexdev.materialfx.dialogs.MFXStageDialog;
 import io.github.palexdev.materialfx.enums.ScrimPriority;
 import io.github.palexdev.mfxresources.fonts.MFXFontIcon;
 import javafx.application.Platform;
-import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -39,7 +37,7 @@ public abstract class BaseForm {
     }
 
     // Method to show MFXGenericDialog
-     protected void showGenericDialog(Stage stage, Pane parent, String title, String message, String dialogType, Consumer<String> response) {
+     protected void showDialog (Stage stage, Pane parent, String title, String message, String dialogType, Consumer<String> response) {
         Platform.runLater(() -> {
              dialogContent = MFXGenericDialogBuilder.build()
                     .setContentText(message)

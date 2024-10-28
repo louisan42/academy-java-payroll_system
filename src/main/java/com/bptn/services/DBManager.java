@@ -1,9 +1,7 @@
 package com.bptn.services;
 
 import com.bptn.App;
-import com.bptn.models.Employee;
-import com.bptn.models.Salary;
-import com.bptn.models.User;
+import com.bptn.models.*;
 import jakarta.persistence.EntityTransaction;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -82,7 +80,8 @@ public class DBManager {
         }
     }
 
-    public void updateEmployee(Map<String, Object> updatedFields, int id) {
+    public boolean updateEmployee(Map<String, Object> updatedFields, int id) {
+        boolean success = false;
         Optional<Transaction> transaction = Optional.empty();
         try (Session session = sessionFactory.openSession()) {
             transaction = Optional.ofNullable(session.beginTransaction());
@@ -109,6 +108,7 @@ public class DBManager {
                 });
                 session.merge(emp);
                 transaction.ifPresent(EntityTransaction::commit);
+                success = true;
             } else {
                 transaction.ifPresent(EntityTransaction::rollback);
             }
@@ -116,6 +116,7 @@ public class DBManager {
             transaction.ifPresent(EntityTransaction::rollback);
             App.getLogger().severe(Arrays.toString(e.getStackTrace()));
         }
+        return success;
     }
 
     public Salary getSalaryById(int id) {
@@ -134,7 +135,16 @@ public class DBManager {
         }
     }
 
-    public void deleteEmployeeById (int employeeId) {
+    public List<Department> getAllDepartments() {
+        try (Session session = sessionFactory.openSession()) {
+            return session.createQuery("FROM Department", Department.class).getResultList();
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean deleteEmployeeById (int employeeId) {
+        boolean success = false;
         Optional<Transaction> transaction = Optional.empty();
         try (Session session = sessionFactory.openSession()) {
             transaction = Optional.ofNullable(session.beginTransaction());
@@ -142,6 +152,7 @@ public class DBManager {
             if (emp != null) {
                 session.remove(emp);
                 transaction.ifPresent(EntityTransaction::commit);
+                success = true;
             } else {
                 transaction.ifPresent(EntityTransaction::rollback);
             }
@@ -149,6 +160,29 @@ public class DBManager {
             transaction.ifPresent(EntityTransaction::rollback);
             App.getLogger().severe(Arrays.toString(e.getStackTrace()));
         }
+        return success;
+    }
 
+    public boolean addStatement(Statement statement) {
+        boolean success = false;
+        Optional<Transaction> transaction = Optional.empty();
+        try (Session session = sessionFactory.openSession()) {
+            transaction = Optional.ofNullable(session.beginTransaction());
+            session.persist(statement);
+            transaction.ifPresent(EntityTransaction::commit);
+            success = true;
+        } catch (NullPointerException e) {
+            transaction.ifPresent(EntityTransaction::rollback);
+            App.getLogger().severe(Arrays.toString(e.getStackTrace()));
+        }
+        return success;
+    }
+
+    public Statement getStatementById(int id) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.get(Statement.class, id);
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

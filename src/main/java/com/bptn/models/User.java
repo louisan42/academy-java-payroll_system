@@ -3,6 +3,7 @@ package com.bptn.models;
 
 import jakarta.persistence.*;
 import javafx.scene.text.Text;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 // We are adding quotes since postgres is case-sensitive
@@ -23,6 +24,22 @@ public class User implements Person{
     @Column(name = "avatar_url")
     private String avatarUrl;
     private String email;
+    @ColumnDefault("false")
+    @Column(name = "is_manager")
+    private Boolean isManager;
+
+
+    public void setManager (Boolean manager) {
+        isManager = manager;
+    }
+
+    public Boolean getIsManager () {
+        return isManager;
+    }
+
+    public void setIsManager (Boolean isManager) {
+        this.isManager = isManager;
+    }
 
     public User(){};
 

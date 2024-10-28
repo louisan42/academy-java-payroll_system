@@ -16,6 +16,8 @@
 /home/louisan/Documents/Projects/academy-java-payroll_system/src/main/java/com/bptn/services/AuthenticatorService.java
 /home/louisan/Documents/Projects/academy-java-payroll_system/src/main/java/com/bptn/controllers/EmployeeArenaController.java
 /home/louisan/Documents/Projects/academy-java-payroll_system/src/main/java/com/bptn/services/Authenticator.java
+/home/louisan/Documents/Projects/academy-java-payroll_system/src/main/java/com/bptn/controllers/StatementController.java
+/home/louisan/Documents/Projects/academy-java-payroll_system/src/main/java/com/bptn/models/Statement.java
 /home/louisan/Documents/Projects/academy-java-payroll_system/src/main/java/com/bptn/models/Employee.java
 /home/louisan/Documents/Projects/academy-java-payroll_system/src/main/java/com/bptn/services/CsvAppUserLoader.java
 /home/louisan/Documents/Projects/academy-java-payroll_system/src/main/java/com/bptn/controllers/EmployeeController.java
